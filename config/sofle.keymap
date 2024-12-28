@@ -10,13 +10,13 @@
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/pointing.h>
 
 #define BASE   0
-#define MAC    1
-#define GAME   2
-#define LOWER  3
-#define RAISE  4
-#define ADJUST 5
+#define GAME   1
+#define LOWER  2
+#define RAISE  3
+#define ADJUST 4
 
 / {
 
@@ -34,25 +34,6 @@
 
         base_layer {
             display-name = "base";
-// ------------------------------------------------------------------------------------------------------------
-// |  ESC  |  1  |  2  |  3  |  4   |  5   |                   |  6   |  7    |  8   |  9   |   0   |   -   |
-// |  TAB  |  Q  |  W  |  E  |  R   |  T   |                   |  Y   |  U    |  I   |  O   |   P   | BKSPC |
-// | SHIFT |  A  |  S  |  D  |  F   |  G   |                   |  H   |  J    |  K   |  L   |   ;   |   '   |
-// | CTRL  |  Z  |  X  |  C  |  V   |  B   |  MUTE  |  |       |  N   |  M    |  ,   |  .   |   /   | SHIFT |
-//               | GUI | ALT | CTRL | LOWER|  ENTER |  | RAISE | SPACE| CTRL  | ALT  | GUI  |
-            bindings = <
-&kp ESC   &kp N1 &kp N2   &kp N3   &kp N4    &kp N5                          &kp N6    &kp N7    &kp N8    &kp N9   &kp N0   &kp MINUS
-&kp TAB   &kp Q  &kp W    &kp E    &kp R     &kp T                           &kp Y     &kp U     &kp I     &kp O    &kp P    &kp BSPC
-&kp LSHFT &kp A  &kp S    &kp D    &kp F     &kp G                           &kp H     &kp J     &kp K     &kp L    &kp SEMI &kp SQT
-&kp LCTRL &kp Z  &kp X    &kp C    &kp V     &kp B     &kp C_MUTE  &none     &kp N     &kp M     &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-            	 &kp LGUI &kp LALT &kp LCTRL &mo LOWER &kp RET     &mo RAISE &kp SPACE &kp RCTRL &kp RALT  &kp RGUI
-            >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
-        };
-
-        mac_layer {
-            display-name = "mac";
 // ------------------------------------------------------------------------------------------------------------
 // |  ESC  |  1  |  2  |  3  |  4  |  5   |                   |  6   |  7   |  8   |  9   |   0   |   -   |
 // |  TAB  |  Q  |  W  |  E  |  R  |  T   |                   |  Y   |  U   |  I   |  O   |   P   | BKSPC |
@@ -99,11 +80,11 @@
 // |        |     |     |      |      |      |        |  |       |      |       |      |      |       |       |
 //                |     |      |      |      |        |  |       |      |       |      |      |
             bindings = <
-&kp LS(GRAVE) &kp F1    &kp F2    &kp F3    &kp F4    &kp F5                   &kp F6    &kp F7    &kp F8    &kp F9    &kp F10   &kp F11
-&kp GRAVE     &kp KP_N1 &kp KP_N2 &kp KP_N3 &kp KP_N4 &kp KP_N5                &kp KP_N6 &kp KP_N7 &kp KP_N8 &kp KP_N9 &kp KP_N0 &kp DEL
-&sk LSHIFT    &none     &none     &none     &none     &none                    &kp LBKT  &kp RBKT  &kp MINUS &kp EQUAL &kp BSLH  &kp F12
-&trans        &none     &none     &none     &none     &none     &trans  &trans &none     &none     &none     &none     &none     &trans
-					    &trans    &trans    &trans    &trans    &trans  &trans &trans    &trans    &trans    &trans
+&kp LS(GRAVE) &kp F1    &kp F2    &kp F3    &kp F4    &kp F5                   &kp F6       &kp F7       &kp F8        &kp F9        &kp F10      &kp F11
+&kp GRAVE     &kp KP_N1 &kp KP_N2 &kp KP_N3 &kp KP_N4 &kp KP_N5                &kp KP_N6    &kp KP_N7    &kp KP_N8     &kp KP_N9     &kp KP_N0    &kp DEL
+&sk LSHIFT    &none     &none     &none     &none     &none                    &kp LBKT     &kp RBKT     &kp MINUS     &kp EQUAL     &kp BSLH     &kp F12
+&trans        &none     &none     &none     &none     &none     &trans  &trans &kp LS(LBKT) &kp LS(RBKT) &kp LS(MINUS) &kp LS(EQUAL) &kp LS(BSLH) &trans
+					    &trans    &trans    &trans    &trans    &trans  &trans &trans       &trans       &trans        &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
@@ -112,17 +93,17 @@
         raise_layer {
             display-name = "raise";
 // ------------------------------------------------------------------------------------------------------------
-// |        | PSCR | SLCK | PAUSE |       |      |                |      |      |      |      |       |       |
-// |        | INS  | HOME | PGUP  |       | NUM  |                |      |      |      |      |       |       |
+// |        | PSCR | SLCK | PAUSE |       |      |                |MOUSEL|MOUSED|MOUSEU|MOUSER|       |       |
+// |        | INS  | HOME | PGUP  |       | NUM  |                |MSBTN1|MSBTN2|MSBTN3|      |       |       |
 // |CAPSWORD| DEL  | END  | PGDN  |       | CAPS |                | LEFT | DOWN |  UP  | RIGHT|       |       |
-// |        | UNDO | CUT  | COPY  | PASTE |      | GAME |  | MAC  |      |      |      |      |       |       |
+// |        | UNDO | CUT  | COPY  | PASTE |      | GAME |  |      |MSCRLL|MSCRLD|MSCRLU|MSCRLL|       |       |
 //                 |      |       |       |      |      |  |      |      |      |      |      |
             bindings = <
-&trans     &kp PSCRN  &kp SLCK  &kp PAUSE_BREAK &none       &none                          &none    &none    &none  &none     &none &none
-&trans     &kp INS    &kp HOME  &kp PG_UP       &none       &kp KP_NUM                     &none    &none    &none  &none     &none &none
-&caps_word &kp DEL    &kp END   &kp PG_DN       &none       &kp CLCK                       &kp LEFT &kp DOWN &kp UP &kp RIGHT &none &none
-&trans     &kp K_UNDO &kp K_CUT &kp K_COPY      &kp K_PASTE &none      &tog GAME  &tog MAC &none    &none    &none  &none     &none &trans
-                      &trans    &trans          &trans      &trans     &trans     &trans   &trans   &trans   &trans &trans
+&trans     &kp PSCRN  &kp SLCK  &kp PAUSE_BREAK &none       &none                        &mkp LCLK      &mkp RCLK      &mkp MCLK    &none           &none &none
+&trans     &kp INS    &kp HOME  &kp PG_UP       &none       &kp KP_NUM                   &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &none &none
+&caps_word &kp DEL    &kp END   &kp PG_DN       &none       &kp CLCK                     &kp LEFT       &kp DOWN       &kp UP       &kp RIGHT       &none &none
+&trans     &kp K_UNDO &kp K_CUT &kp K_COPY      &kp K_PASTE &none      &tog GAME  &trans &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_UP &msc SCRL_RIGHT &none &trans
+                      &trans    &trans          &trans      &trans     &trans     &trans &trans         &trans         &trans       &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
@@ -131,17 +112,17 @@
         adjust_layer {
 // ----------------------------------------------------------------------------------------------------------------------------
 // | OUTTOG |  BT0    |  BT1    |   BT2   |   BT3   |   BT4   |                  |      |      |       |      |       |       |
-// | EXTPWR |  BTCLR  |         |         |         | SOFTOFF |                  |      |      |       |      |       |       |
+// | EXTPWR |  BTCLR  |         |         |STD_UNLCK| SOFTOFF |                  |      |      |       |      |       |       |
 // |        |         |         |         |         |         |                  |      |      |       |      |       |       |
 // |        |         |         |         |         |         |         | |      |      |      |       |      |       |       |
 //                    |         |         |         |         |         | |      |      |      |       |      |
             display-name = "adjust";
             bindings = <
-&out OUT_TOG      &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4              &none &none &none &none &none &none
-&ext_power EP_TOG &bt BT_CLR   &none        &none        &none        &soft_off                 &none &none &none &none &none &none
-&none             &none        &none        &none        &none        &none                     &none &none &none &none &none &none
-&none             &none        &none        &none        &none        &none        &none  &none &none &none &none &none &none &none
-                               &none        &none        &none        &none        &none  &none &none &none &none &none
+&out OUT_TOG      &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3   &bt BT_SEL 4              &none &none &none &none &none &none
+&ext_power EP_TOG &bt BT_CLR   &none        &none        &studio_unlock &soft_off                 &none &none &none &none &none &none
+&none             &none        &none        &none        &none          &none                     &none &none &none &none &none &none
+&none             &none        &none        &none        &none          &none        &none  &none &none &none &none &none &none &none
+                               &none        &none        &none          &none        &none  &none &none &none &none &none
             >;
         };
 
